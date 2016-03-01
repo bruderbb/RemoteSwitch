@@ -1,5 +1,6 @@
 /* 
  * RemoteSwitch library v3.1.1 Further extended by Jeroen Meijer
+ * 3.1.2: fixed bug in CnLedDim1 (thanks Piotr Hnatiuk)
  * 3.1.1: added CnLedDim1 (chinese LED strip dimmer)
  * 3.1.0: ifdef around all types to reduce footprint, fixed ENER002 button 4 bug
  * 3.0.9: added ENER002 (= Action Eurodomest 972080)
@@ -729,7 +730,7 @@ CnLedDim1Switch::CnLedDim1Switch(unsigned short pin, unsigned int periodusec) : 
 
 void CnLedDim1Switch::sendSignal(unsigned long address, unsigned short button) {
 	unsigned long data;
-	data = (address & 0x008ffff) << 5; // 19 bits address
+	data = (address & 0x007ffff) << 5; // 19 bits address
 	data |= (button & 0x1f);
 	sendTelegramEner002(data, _periodusec, _repeats, _pin);
 }
